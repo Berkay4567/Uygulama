@@ -1,0 +1,83 @@
+<%- include('layouts/head.ejs')%>
+
+    <body>
+        <%- include('layouts/navigation.ejs')%>
+            <!-- Page Content -->
+            <div class="container">
+                <div class="row">
+                    <%- include('layouts/sidebar.ejs')%>
+                        <div class="col-lg-9">
+                            <%- include('layouts/carousel.ejs')%>
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <% if (cart === null || cart.products.length == 0) {%>
+
+                                            <h2>Sepette ürün yok :(</h2>
+
+                                            <%} else {%>
+                                                <h2>Sepet Detayları</h2>
+
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">ID</th>
+                                                            <th scope="col">Başlık</th>
+                                                            <th scope="col">Fiyat</th>
+                                                            <th scope="col">Miktar</th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(let i = 0; i < cart.products.length; i++){
+                                                            let product = cart.products[i];  
+                                                        %>
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <%= i+1%>
+                                                                </th>
+                                                                <td>
+                                                                    <%= product.title%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= product.price%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= product.qty%>
+                                                                </td>
+                                                                <td>
+                                                                    <form action="/delete-cart" method="POST">
+                                                                        <input type="hidden" name="prodId" value="<%= product.id%>">
+                                                                        <button type="submit" class="btn btn-primary">SİL</button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <%}%>
+                                                                <tr>
+                                                                    <td>Toplam: </td>
+                                                                    <td colspan="4">
+                                                                        <%= cart.totalPrice%>
+                                                                            TL
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                    </tbody>
+                                                </table>
+
+
+                                                <%}%>
+
+                                                    <br>
+                                    </div>
+
+                                </div>
+                                <!-- /.row -->
+                        </div>
+                        <!-- /.col-lg-9 -->
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+
+            <%- include('layouts/end.ejs')%>
